@@ -13,7 +13,11 @@
     color: #F9FAFB;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     overflow-x: hidden;
-    selection-background-color: rgba(6, 182, 212, 0.3);
+  }
+
+  ::selection {
+    background-color: rgba(6, 182, 212, 0.3);
+    color: #F9FAFB;
   }
 }
 

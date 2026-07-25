@@ -33,6 +33,15 @@ const FEATURES = [
     span: 'col-span-1'
   },
   {
+    title: 'Global CDN Mesh',
+    description: 'Deploy pipelines to 300+ edge locations worldwide with automatic geo-routing and instant failover.',
+    icon: Globe,
+    badge: '300+ Regions',
+    color: 'from-blue-500/20 to-emerald-500/20',
+    borderColor: 'hover:border-blue-400',
+    span: 'col-span-1'
+  },
+  {
     title: 'Global Observability',
     description: 'Live payload tracing, memory diagnostics, and real-time execution logs streaming via WebSockets.',
     icon: Activity,
@@ -48,7 +57,7 @@ const FEATURES = [
     badge: 'Git-Native',
     color: 'from-cyan-500/20 to-emerald-500/20',
     borderColor: 'hover:border-cyan-400',
-    span: 'col-span-1'
+    span: 'col-span-1 md:col-span-2'
   }
 ];
 

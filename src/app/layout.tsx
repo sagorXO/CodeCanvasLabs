@@ -1,6 +1,13 @@
 import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import './globals.css';
 import { ClickToComponent } from '@/components/ClickToComponent';
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
 
 export const metadata: Metadata = {
   title: 'CodeCanvas Labs — Visual AI & Workflow Pipeline Engine',
@@ -21,11 +28,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark scroll-smooth">
-      <body className="min-h-screen bg-[#090A0F] text-[#F9FAFB] antialiased selection:bg-cyan-500/30">
+    <html lang="en" className={`dark scroll-smooth ${inter.variable}`}>
+      <body className={`min-h-screen bg-[#090A0F] text-[#F9FAFB] antialiased ${inter.className}`}>
         {children}
         <ClickToComponent />
       </body>
     </html>
   );
 }
+
