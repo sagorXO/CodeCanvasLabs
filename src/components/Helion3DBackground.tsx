@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback, useState } from 'react';
 import * as THREE from 'three';
 
 // Simplex noise for organic vertex displacement
@@ -110,6 +110,7 @@ const FRAGMENT_SHADER = `
 export const Helion3DBackground: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null);
   const scrollProgressRef = useRef(0);
+  const [hasWebGlError, setHasWebGlError] = useState(false);
 
   const handleScroll = useCallback(() => {
     const scrollY = window.scrollY;
@@ -124,6 +125,25 @@ export const Helion3DBackground: React.FC = () => {
     const width = container.clientWidth || window.innerWidth;
     const height = container.clientHeight || window.innerHeight;
 
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        alpha: true,
+        antialias: true,
+        powerPreference: 'default',
+        failIfMajorPerformanceCaveat: false,
+      });
+    } catch (err) {
+      console.warn('WebGLRenderer context creation unavailable, activating ambient CSS fallback.', err);
+      setHasWebGlError(true);
+      return;
+    }
+
+    if (!renderer || !renderer.domElement) {
+      setHasWebGlError(true);
+      return;
+    }
+
     // Scene
     const scene = new THREE.Scene();
 
@@ -131,12 +151,6 @@ export const Helion3DBackground: React.FC = () => {
     const camera = new THREE.PerspectiveCamera(55, width / height, 0.1, 100);
     camera.position.set(0, 0, 5.5);
 
-    // Renderer
-    const renderer = new THREE.WebGLRenderer({
-      alpha: true,
-      antialias: true,
-      powerPreference: 'high-performance',
-    });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -302,7 +316,7 @@ export const Helion3DBackground: React.FC = () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(frameId);
-      if (container.contains(renderer.domElement)) {
+      if (container && renderer && container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
       }
       sphereGeo.dispose();
@@ -311,9 +325,18 @@ export const Helion3DBackground: React.FC = () => {
       coreMat.dispose();
       particleGeo.dispose();
       particleMat.dispose();
-      renderer.dispose();
+      if (renderer) renderer.dispose();
     };
   }, [handleScroll]);
+
+  if (hasWebGlError) {
+    return (
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden flex items-center justify-center">
+        <div className="absolute w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[140px] animate-pulse" />
+        <div className="absolute w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[120px]" />
+      </div>
+    );
+  }
 
   return (
     <div
