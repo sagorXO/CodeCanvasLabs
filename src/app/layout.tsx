@@ -25,6 +25,36 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://codecanvas.io/#organization',
+      'name': 'CodeCanvas Labs',
+      'url': 'https://codecanvas.io',
+      'logo': 'https://codecanvas.io/favicon.svg',
+      'sameAs': [
+        'https://github.com/codecanvas-labs',
+        'https://twitter.com/codecanvas_labs'
+      ]
+    },
+    {
+      '@type': 'SoftwareApplication',
+      '@id': 'https://codecanvas.io/#software',
+      'name': 'CodeCanvas Visual Engine',
+      'applicationCategory': 'DeveloperApplication',
+      'operatingSystem': 'Cloud / Edge WebAssembly',
+      'offers': {
+        '@type': 'Offer',
+        'price': '0.00',
+        'priceCurrency': 'USD'
+      },
+      'description': 'Architect, simulate, and deploy high-speed visual AI pipelines with zero layout shift and sub-11ms execution latency.'
+    }
+  ]
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -32,6 +62,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`dark scroll-smooth ${inter.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className={`min-h-screen bg-[#090A0F] text-[#F9FAFB] antialiased ${inter.className}`}>
         {children}
         <ClickToComponent />

@@ -1,14 +1,15 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Layers, Sparkles, Terminal, Shield, ArrowRight, Menu, X, Code, HelpCircle } from 'lucide-react';
+import { Layers, Sparkles, Terminal, Shield, ArrowRight, Menu, X, Code, HelpCircle, Activity, Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface NavbarProps {
   onOpenWaitlist: () => void;
+  onOpenLookup: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist, onOpenLookup }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -43,11 +44,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
         </a>
 
         {/* Right-Aligned Group: Navigation Links + CTA Button */}
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-6">
           {/* Navigation Links (Right-Aligned) */}
-          <nav className="hidden lg:flex items-center gap-7 text-xs font-mono tracking-wide text-slate-300/80">
+          <nav className="hidden lg:flex items-center gap-6 text-xs font-mono tracking-wide text-slate-300/80">
             <a href="#simulator" className="hover:text-cyan-300 transition-colors flex items-center gap-1.5 py-1">
               <Terminal className="h-3.5 w-3.5 text-cyan-400" /> Simulator
+            </a>
+            <a href="#benchmark" className="hover:text-cyan-300 transition-colors flex items-center gap-1.5 py-1">
+              <Activity className="h-3.5 w-3.5 text-emerald-400" /> Edge Health
             </a>
             <a href="#features" className="hover:text-cyan-300 transition-colors flex items-center gap-1.5 py-1">
               <Sparkles className="h-3.5 w-3.5 text-blue-400" /> Features
@@ -62,6 +66,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               <HelpCircle className="h-3.5 w-3.5 text-purple-400" /> FAQ
             </a>
           </nav>
+
+          <button
+            onClick={onOpenLookup}
+            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 bg-white/[0.04] hover:bg-white/10 text-slate-300 text-xs font-mono transition-all"
+          >
+            <Search className="h-3.5 w-3.5 text-cyan-400" />
+            <span>Check Rank</span>
+          </button>
 
           {/* Primary CTA Trigger */}
           <button
@@ -102,6 +114,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                 <Terminal className="h-4 w-4 text-cyan-400" /> Simulator
               </a>
               <a
+                href="#benchmark"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex items-center gap-2 py-2 hover:text-cyan-400 transition-colors"
+              >
+                <Activity className="h-4 w-4 text-emerald-400" /> Edge Latency Benchmark
+              </a>
+              <a
                 href="#features"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="flex items-center gap-2 py-2 hover:text-cyan-400 transition-colors"
@@ -129,6 +148,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               >
                 <HelpCircle className="h-4 w-4 text-purple-400" /> FAQ
               </a>
+              <button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  onOpenLookup();
+                }}
+                className="flex items-center gap-2 py-2 text-cyan-400 font-bold hover:text-white transition-colors"
+              >
+                <Search className="h-4 w-4" /> Check Waitlist Rank
+              </button>
             </nav>
           </motion.div>
         )}

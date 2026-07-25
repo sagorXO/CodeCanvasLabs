@@ -2,10 +2,11 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, ShieldCheck, Activity, Zap } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Activity, Zap, Search } from 'lucide-react';
 
 interface HeroSectionProps {
   onOpenWaitlist: (email?: string) => void;
+  onOpenLookup: () => void;
 }
 
 const titleWords = ['Architect', 'AI', 'Pipelines', '—'];
@@ -33,7 +34,7 @@ const fadeUpVariants = {
   }),
 };
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpenLookup }) => {
   return (
     <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
       {/* Ambient Radial Spotlight Overlays */}
@@ -103,21 +104,30 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist }) => {
           Simulate, test, and deploy multimodal AI workflows with zero layout shift and sub-11ms execution latency.
         </motion.p>
 
-        {/* Glass CTA Button */}
+        {/* Glass CTA Buttons */}
         <motion.div
           initial="hidden"
           animate="visible"
           custom={1.0}
           variants={fadeUpVariants}
-          className="mt-9"
+          className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <button
             type="button"
             onClick={() => onOpenWaitlist()}
-            className="group relative inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 px-8 py-4 text-sm font-bold text-white shadow-xl shadow-cyan-500/25 transition-all duration-300 hover:shadow-cyan-500/40 hover:scale-[1.03] active:scale-[0.98] btn-glow"
+            className="w-full sm:w-auto group relative inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 px-8 py-4 text-sm font-bold text-white shadow-xl shadow-cyan-500/25 transition-all duration-300 hover:shadow-cyan-500/40 hover:scale-[1.03] active:scale-[0.98] btn-glow"
           >
             <span className="relative z-10 font-mono tracking-tight text-[15px]">Get Unlimited Access</span>
             <ArrowRight className="relative z-10 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+          </button>
+
+          <button
+            type="button"
+            onClick={onOpenLookup}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-white/[0.06] border border-white/15 px-6 py-4 text-sm font-bold text-slate-200 hover:text-white hover:bg-white/10 transition-all font-mono"
+          >
+            <Search className="h-4 w-4 text-cyan-400" />
+            <span>Check My Waitlist Rank</span>
           </button>
         </motion.div>
 

@@ -6,12 +6,14 @@ import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/HeroSection';
 import { SocialProofMarquee } from '@/components/SocialProofMarquee';
 import { InteractiveCanvas } from '@/components/InteractiveCanvas';
+import { EdgeBenchmarkWidget } from '@/components/EdgeBenchmarkWidget';
 import { BentoGrid } from '@/components/BentoGrid';
 import { SDKShowcase } from '@/components/SDKShowcase';
 import { PricingMatrix } from '@/components/PricingMatrix';
 import { FAQSection } from '@/components/FAQSection';
 import { CTABanner } from '@/components/CTABanner';
 import { WaitlistModal } from '@/components/WaitlistModal';
+import { WaitlistLookupModal } from '@/components/WaitlistLookupModal';
 import { Footer } from '@/components/Footer';
 
 // Dynamic import for 3D Background
@@ -22,6 +24,7 @@ const Helion3DBackground = dynamic(
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLookupOpen, setIsLookupOpen] = useState(false);
   const [initialEmail, setInitialEmail] = useState('');
 
   const handleOpenWaitlist = (email?: string) => {
@@ -35,18 +38,32 @@ export default function Home() {
     setIsModalOpen(false);
   };
 
+  const handleOpenLookup = () => {
+    setIsLookupOpen(true);
+  };
+
+  const handleCloseLookup = () => {
+    setIsLookupOpen(false);
+  };
+
   return (
     <div className="relative min-h-screen bg-[#060507] text-[#F9FAFB] flex flex-col justify-between overflow-x-hidden">
       {/* Fixed 3D Scene Background */}
       <Helion3DBackground />
 
       <div className="relative z-10">
-        <Navbar onOpenWaitlist={() => handleOpenWaitlist()} />
+        <Navbar
+          onOpenWaitlist={() => handleOpenWaitlist()}
+          onOpenLookup={handleOpenLookup}
+        />
 
         <main>
           {/* Hero Section — Translucent Deep Obsidian */}
           <div className="bg-[#060507]/60">
-            <HeroSection onOpenWaitlist={handleOpenWaitlist} />
+            <HeroSection
+              onOpenWaitlist={handleOpenWaitlist}
+              onOpenLookup={handleOpenLookup}
+            />
           </div>
 
           {/* Social Proof Marquee — Translucent Dark Slate Band */}
@@ -58,6 +75,11 @@ export default function Home() {
           <div className="bg-gradient-to-b from-[#080C1B]/80 via-[#090D20]/80 to-[#080C1B]/80 border-b border-white/[0.04] relative">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent pointer-events-none" />
             <InteractiveCanvas />
+          </div>
+
+          {/* Real-time Edge Health Diagnostics Benchmark */}
+          <div className="bg-[#070914]/85 border-b border-white/[0.04]">
+            <EdgeBenchmarkWidget />
           </div>
 
           {/* Bento Grid Features — Pure Obsidian */}
@@ -94,6 +116,11 @@ export default function Home() {
         isOpen={isModalOpen}
         onClose={handleCloseWaitlist}
         initialEmail={initialEmail}
+      />
+
+      <WaitlistLookupModal
+        isOpen={isLookupOpen}
+        onClose={handleCloseLookup}
       />
     </div>
   );

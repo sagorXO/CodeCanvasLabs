@@ -29,6 +29,8 @@ export interface PipelineNode {
   label: string;
   status: string;
   execution_ms?: number;
+  model?: string;
+  region?: string;
 }
 
 export interface PipelineMetrics {
@@ -41,3 +43,11 @@ export interface PipelineState {
   nodes: PipelineNode[];
   metrics: PipelineMetrics;
 }
+
+export interface EdgeRegionPing {
+  region: string;
+  location: string;
+  latency_ms: number;
+  status: 'optimal' | 'good' | 'degraded';
+}
+

@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { CanvasTab, PipelineNode } from '@/lib/types';
-import { Terminal, Network, Code, CheckCircle2, Loader2, Play, Activity, ArrowRight } from 'lucide-react';
+import { Terminal, Network, Code, CheckCircle2, Loader2, Play, Activity, ArrowRight, Settings2, Plus, Trash2, Sliders } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const containerVariants = {
@@ -31,30 +31,77 @@ const nodeVariants = {
 export const InteractiveCanvas: React.FC = () => {
   const [activeTab, setActiveTab] = useState<CanvasTab>('visual');
   const [isExecuting, setIsExecuting] = useState(false);
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>('n2');
   const sectionRef = useRef<HTMLElement>(null);
+  
   const [nodes, setNodes] = useState<PipelineNode[]>([
-    { id: 'n1', type: 'trigger', label: 'Webhook Ingest', status: '200 OK', execution_ms: 2 },
-    { id: 'n2', type: 'ai_transform', label: 'Gemini Engine Node', status: 'processing', execution_ms: 7 },
-    { id: 'n3', type: 'output', label: 'HTTP Response', status: 'ready', execution_ms: 2 }
+    { id: 'n1', type: 'trigger', label: 'Webhook Ingest', status: '200 OK', execution_ms: 2, model: 'HTTPS / Wasm' },
+    { id: 'n2', type: 'ai_transform', label: 'Gemini Engine Node', status: '200 OK', execution_ms: 6, model: 'gemini-3.6-flash' },
+    { id: 'n3', type: 'output', label: 'HTTP Edge Response', status: 'ready', execution_ms: 3, model: 'CDN Dispatch' }
   ]);
+
+  const selectedNode = nodes.find(n => n.id === selectedNodeId);
 
   const handleSimulateRun = () => {
     setIsExecuting(true);
     setNodes(prev => prev.map(n => ({ ...n, status: 'processing' })));
     setTimeout(() => {
-      setNodes([
-        { id: 'n1', type: 'trigger', label: 'Webhook Ingest', status: '200 OK', execution_ms: 2 },
-        { id: 'n2', type: 'ai_transform', label: 'Gemini Engine Node', status: '200 OK', execution_ms: 6 },
-        { id: 'n3', type: 'output', label: 'HTTP Response', status: '200 OK', execution_ms: 3 }
-      ]);
+      setNodes(prev => prev.map(n => ({ ...n, status: '200 OK' })));
       setIsExecuting(false);
-    }, 1200);
+    }, 1100);
   };
+
+  const handleUpdateNodeModel = (model: string) => {
+    if (!selectedNodeId) return;
+    setNodes(prev =>
+      prev.map(n => (n.id === selectedNodeId ? { ...n, model } : n))
+    );
+  };
+
+  const handleUpdateNodeLabel = (label: string) => {
+    if (!selectedNodeId) return;
+    setNodes(prev =>
+      prev.map(n => (n.id === selectedNodeId ? { ...n, label } : n))
+    );
+  };
+
+  const handleAddNode = () => {
+    if (nodes.length >= 5) return;
+    const newId = `n${nodes.length + 1}`;
+    const newNode: PipelineNode = {
+      id: newId,
+      type: 'ai_transform',
+      label: `Gemini Filter 0${nodes.length + 1}`,
+      status: 'ready',
+      execution_ms: 4,
+      model: 'gemini-1.5-flash-8b'
+    };
+    // insert before last output node if exists
+    const lastIndex = nodes.length - 1;
+    const updated = [...nodes.slice(0, lastIndex), newNode, nodes[lastIndex]];
+    setNodes(updated);
+    setSelectedNodeId(newId);
+  };
+
+  const handleDeleteNode = (id: string) => {
+    if (nodes.length <= 2) return; // Keep at least 2 nodes
+    setNodes(prev => prev.filter(n => n.id !== id));
+    if (selectedNodeId === id) {
+      setSelectedNodeId(nodes[0].id);
+    }
+  };
+
+  const totalLatency = nodes.reduce((acc, curr) => acc + (curr.execution_ms || 0), 0);
 
   const jsonState = {
     active_tab: activeTab,
+    pipeline_id: "pipe_live_visual_984",
     nodes: nodes,
-    metrics: { execution_time_ms: isExecuting ? 18 : 11, uptime_percentage: 99.99 }
+    metrics: {
+      total_execution_ms: isExecuting ? totalLatency + 5 : totalLatency,
+      uptime_percentage: 99.99,
+      zero_trust_status: "ACTIVE_SOC2"
+    }
   };
 
   return (
@@ -71,18 +118,17 @@ export const InteractiveCanvas: React.FC = () => {
           Interactive <span className="text-gradient">Pipeline Simulator</span>
         </h2>
         <p className="mt-4 text-slate-300/80 text-base sm:text-lg max-w-2xl mx-auto">
-          Test real-time node routing, inspection payloads, and sub-second execution streams live in your browser.
+          Configure AI nodes, inspect raw JSON streams, and execute multimodal pipeline benchmarks live in your browser.
         </p>
       </motion.div>
 
-      {/* Main Canvas Window — slides up with spring */}
+      {/* Main Canvas Window */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="rounded-2xl border border-white/[0.08] bg-[#0C0E1A]/95 shadow-2xl backdrop-blur-xl overflow-hidden hover:border-cyan-500/20 transition-colors duration-500"
-        style={{ animation: 'float 6s ease-in-out infinite' }}
       >
         {/* Window Top Bar */}
         <div className="flex flex-wrap items-center justify-between border-b border-white/[0.06] bg-[#080A12] px-5 py-3.5 gap-4">
@@ -114,9 +160,18 @@ export const InteractiveCanvas: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-3">
+            <button
+              onClick={handleAddNode}
+              disabled={nodes.length >= 5}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.06] border border-white/10 text-xs font-mono text-slate-300 hover:text-white hover:bg-white/10 transition-all disabled:opacity-40"
+            >
+              <Plus className="h-3.5 w-3.5 text-cyan-400" />
+              <span>Add Node</span>
+            </button>
+
             <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/40 border border-emerald-500/20 text-xs font-mono text-emerald-400">
               <Activity className="h-3.5 w-3.5 animate-pulse" />
-              <span>11ms Latency</span>
+              <span>{totalLatency}ms Total Latency</span>
             </div>
 
             <button
@@ -140,7 +195,7 @@ export const InteractiveCanvas: React.FC = () => {
         </div>
 
         {/* Tab Content */}
-        <div className="p-8 min-h-[340px] flex items-center justify-center bg-[#080A12]/80">
+        <div className="p-8 min-h-[340px] flex flex-col justify-between bg-[#080A12]/80 gap-6">
           <AnimatePresence mode="wait">
             {activeTab === 'visual' && (
               <motion.div
@@ -151,38 +206,64 @@ export const InteractiveCanvas: React.FC = () => {
                 exit={{ opacity: 0, y: -10, transition: { duration: 0.2 } }}
                 className="w-full flex flex-col md:flex-row items-center justify-between gap-4"
               >
-                {nodes.map((node, index) => (
-                  <React.Fragment key={node.id}>
-                    <motion.div
-                      variants={nodeVariants}
-                      className="w-full flex-1 p-5 rounded-xl border border-white/[0.08] bg-[#0E111E] backdrop-blur-md hover:border-cyan-500/40 transition-all duration-300 group"
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-xs font-mono font-semibold text-cyan-400/80 uppercase">
-                          Node 0{index + 1} · {node.type}
-                        </span>
-                        <span className="flex items-center gap-1 text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/20">
-                          {node.status === 'processing' ? (
-                            <Loader2 className="h-3 w-3 animate-spin text-cyan-400" />
-                          ) : (
-                            <CheckCircle2 className="h-3 w-3 text-emerald-400" />
-                          )}
-                          {node.status}
-                        </span>
-                      </div>
-                      <h4 className="text-sm font-bold text-white mb-1">{node.label}</h4>
-                      <p className="text-xs font-mono text-slate-400/70">exec: {node.execution_ms}ms</p>
-                    </motion.div>
-                    {index < nodes.length - 1 && (
+                {nodes.map((node, index) => {
+                  const isSelected = selectedNodeId === node.id;
+                  return (
+                    <React.Fragment key={node.id}>
                       <motion.div
                         variants={nodeVariants}
-                        className="hidden md:flex items-center justify-center"
+                        onClick={() => setSelectedNodeId(node.id)}
+                        className={`w-full flex-1 p-5 rounded-xl border backdrop-blur-md cursor-pointer transition-all duration-300 relative group ${
+                          isSelected
+                            ? 'bg-[#11162B] border-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.25)]'
+                            : 'bg-[#0E111E] border-white/[0.08] hover:border-cyan-500/40'
+                        }`}
                       >
-                        <ArrowRight className="h-4 w-4 text-cyan-400/50 animate-pulse" />
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="text-xs font-mono font-semibold text-cyan-400/80 uppercase flex items-center gap-1">
+                            Node 0{index + 1}
+                            {isSelected && <Settings2 className="h-3 w-3 text-cyan-300" />}
+                          </span>
+                          <span className="flex items-center gap-1 text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/20">
+                            {node.status === 'processing' ? (
+                              <Loader2 className="h-3 w-3 animate-spin text-cyan-400" />
+                            ) : (
+                              <CheckCircle2 className="h-3 w-3 text-emerald-400" />
+                            )}
+                            {node.status}
+                          </span>
+                        </div>
+                        <h4 className="text-sm font-bold text-white mb-1">{node.label}</h4>
+                        <div className="flex items-center justify-between text-xs font-mono text-slate-400/70">
+                          <span>{node.model || 'Wasm'}</span>
+                          <span>{node.execution_ms}ms</span>
+                        </div>
+
+                        {nodes.length > 2 && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteNode(node.id);
+                            }}
+                            className="absolute top-2 right-2 p-1 rounded bg-rose-500/10 text-rose-400 opacity-0 group-hover:opacity-100 hover:bg-rose-500/20 transition-all"
+                            title="Delete Node"
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </button>
+                        )}
                       </motion.div>
-                    )}
-                  </React.Fragment>
-                ))}
+
+                      {index < nodes.length - 1 && (
+                        <motion.div
+                          variants={nodeVariants}
+                          className="hidden md:flex items-center justify-center"
+                        >
+                          <ArrowRight className="h-4 w-4 text-cyan-400/50 animate-pulse" />
+                        </motion.div>
+                      )}
+                    </React.Fragment>
+                  );
+                })}
               </motion.div>
             )}
 
@@ -208,13 +289,55 @@ export const InteractiveCanvas: React.FC = () => {
                 exit={{ opacity: 0, y: -10 }}
                 className="w-full font-mono text-xs space-y-2.5 p-5 rounded-xl bg-[#060710] border border-white/[0.06] text-slate-300"
               >
-                <div className="text-emerald-400/90">[INFO] 19:22:15.002 — Webhook payload ingest verified (200 OK)</div>
-                <div className="text-cyan-400/90">[INFO] 19:22:15.004 — Gemini 3.6 Flash transformation pipeline initialized</div>
-                <div className="text-slate-400">[DEBUG] 19:22:15.009 — Zero-trust CORS header validated</div>
-                <div className="text-emerald-400/90">[SUCCESS] 19:22:15.011 — HTTP Edge response dispatched in 11ms</div>
+                {nodes.map((n, i) => (
+                  <div key={n.id} className="text-cyan-400/90">
+                    [INFO] 19:22:15.00{i * 2 + 2} — Node 0{i + 1} ({n.label}): executed with model [{n.model || 'Wasm'}] in {n.execution_ms}ms (200 OK)
+                  </div>
+                ))}
+                <div className="text-emerald-400/90">[SUCCESS] 19:22:15.011 — HTTP Edge payload pipeline completed in {totalLatency}ms</div>
               </motion.div>
             )}
           </AnimatePresence>
+
+          {/* Node Configuration Toolbar */}
+          {activeTab === 'visual' && selectedNode && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="pt-4 border-t border-white/[0.06] flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-slate-300 bg-[#060710]/60 p-4 rounded-xl"
+            >
+              <div className="flex items-center gap-2">
+                <Sliders className="h-4 w-4 text-cyan-400" />
+                <span className="font-bold text-white">Selected: {selectedNode.label}</span>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-slate-400">Node Label:</span>
+                  <input
+                    type="text"
+                    value={selectedNode.label}
+                    onChange={(e) => handleUpdateNodeLabel(e.target.value)}
+                    className="rounded bg-black/60 border border-white/15 px-2.5 py-1 text-xs text-white focus:border-cyan-400 focus:outline-none"
+                  />
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span className="text-slate-400">AI Model / Engine:</span>
+                  <select
+                    value={selectedNode.model || 'gemini-3.6-flash'}
+                    onChange={(e) => handleUpdateNodeModel(e.target.value)}
+                    className="rounded bg-black/60 border border-white/15 px-2.5 py-1 text-xs text-cyan-300 focus:border-cyan-400 focus:outline-none"
+                  >
+                    <option value="gemini-3.6-flash">gemini-3.6-flash</option>
+                    <option value="gemini-1.5-pro">gemini-1.5-pro</option>
+                    <option value="gemini-1.5-flash-8b">gemini-1.5-flash-8b</option>
+                    <option value="wasm-edge-transform">wasm-edge-transform</option>
+                  </select>
+                </div>
+              </div>
+            </motion.div>
+          )}
         </div>
       </motion.div>
     </section>
