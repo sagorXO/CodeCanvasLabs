@@ -29,11 +29,12 @@
 - **Visual QA**: Browser subagent rendered and validated screenshots of Hero, Navbar, Visual Graph, and Terminal Stream.
 - **Git Commit**: Clean Git repository initialized (`commit ac8be36`).
 
-### [2026-07-25 19:19] 3D Three.js Helion Background Integration
-- **Helion 3D Canvas Built**: Created [Helion3DBackground.tsx](file:///Users/saiedsagar/DEVELOPER/DEVELOPER/CodeCanvasLabs/src/components/Helion3DBackground.tsx) using Three.js — featuring a luminous 3D Torus Knot wireframe, inner icosahedron core, additive particle starfield, and real-time mouse parallax interaction.
-- **Hero Section Integrated**: Rendered `<Helion3DBackground />` directly behind the hero text (`z-0`) in [HeroSection.tsx](file:///Users/saiedsagar/DEVELOPER/DEVELOPER/CodeCanvasLabs/src/components/HeroSection.tsx).
-- **TDD & Build**: 10/10 Vitest unit tests passed; Next.js 14 production bundle compiled cleanly with 0 errors.
-- **GitHub Sync**: Pushed commit `4186cb6` to `origin/main` ([github.com/sagorXO/CodeCanvasLabs](https://github.com/sagorXO/CodeCanvasLabs)).
+### [2026-07-25 19:23] High-Contrast Glassmorphism & UI Styling Upgrade
+- **Globals CSS Overhaul**: Upgraded [globals.css](file:///Users/saiedsagar/DEVELOPER/DEVELOPER/CodeCanvasLabs/src/app/globals.css) with high-contrast glass panels (`rgba(17, 19, 31, 0.85)` with `backdrop-filter: blur(16px)`), cyan/blue neon micro-borders (`border border-cyan-500/30`), text shadow accents, and `.btn-glow` utilities.
+- **Component Upgrades**: Re-styled [Navbar.tsx](file:///Users/saiedsagar/DEVELOPER/DEVELOPER/CodeCanvasLabs/src/components/Navbar.tsx), [BentoGrid.tsx](file:///Users/saiedsagar/DEVELOPER/DEVELOPER/CodeCanvasLabs/src/components/BentoGrid.tsx), [PricingMatrix.tsx](file:///Users/saiedsagar/DEVELOPER/DEVELOPER/CodeCanvasLabs/src/components/PricingMatrix.tsx), [InteractiveCanvas.tsx](file:///Users/saiedsagar/DEVELOPER/DEVELOPER/CodeCanvasLabs/src/components/InteractiveCanvas.tsx), and [WaitlistModal.tsx](file:///Users/saiedsagar/DEVELOPER/DEVELOPER/CodeCanvasLabs/src/components/WaitlistModal.tsx) with rich dark slate cards (`bg-[#11131F]/90`), glowing badges, gradient titles, and high-visibility borders.
+- **Verification**: 10/10 Vitest unit tests passed; Next.js 14 production build compiled cleanly with 0 errors.
+- **GitHub Sync**: Pushed commit `78eecd1` to `origin/main` ([github.com/sagorXO/CodeCanvasLabs](https://github.com/sagorXO/CodeCanvasLabs)).
+
 
 
 
