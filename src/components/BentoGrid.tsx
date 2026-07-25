@@ -10,8 +10,8 @@ const FEATURES = [
     description: 'Run visual workflows directly at the edge with sub-11ms execution latency and zero warm-up delays.',
     icon: Zap,
     badge: '11ms Latency',
-    color: 'from-blue-500/20 to-cyan-500/20',
-    borderColor: 'hover:border-cyan-400',
+    color: 'from-cyan-500/20 to-blue-500/20',
+    borderColor: 'border-cyan-500/30 hover:border-cyan-400',
     span: 'col-span-1 md:col-span-2'
   },
   {
@@ -19,8 +19,8 @@ const FEATURES = [
     description: 'Native Gemini 3.6 Flash integration for structured JSON transformations and autonomous task execution.',
     icon: Cpu,
     badge: 'Multimodal',
-    color: 'from-cyan-500/20 to-blue-500/20',
-    borderColor: 'hover:border-blue-400',
+    color: 'from-blue-500/20 to-cyan-500/20',
+    borderColor: 'border-cyan-500/30 hover:border-cyan-400',
     span: 'col-span-1'
   },
   {
@@ -29,7 +29,7 @@ const FEATURES = [
     icon: Shield,
     badge: 'SOC2 Type II',
     color: 'from-emerald-500/20 to-cyan-500/20',
-    borderColor: 'hover:border-emerald-400',
+    borderColor: 'border-cyan-500/30 hover:border-emerald-400',
     span: 'col-span-1'
   },
   {
@@ -38,7 +38,7 @@ const FEATURES = [
     icon: Globe,
     badge: '300+ Regions',
     color: 'from-blue-500/20 to-emerald-500/20',
-    borderColor: 'hover:border-blue-400',
+    borderColor: 'border-cyan-500/30 hover:border-cyan-400',
     span: 'col-span-1'
   },
   {
@@ -46,8 +46,8 @@ const FEATURES = [
     description: 'Live payload tracing, memory diagnostics, and real-time execution logs streaming via WebSockets.',
     icon: Activity,
     badge: 'Real-time',
-    color: 'from-blue-500/20 to-cyan-500/20',
-    borderColor: 'hover:border-cyan-400',
+    color: 'from-cyan-500/20 to-blue-500/20',
+    borderColor: 'border-cyan-500/30 hover:border-cyan-400',
     span: 'col-span-1'
   },
   {
@@ -56,19 +56,19 @@ const FEATURES = [
     icon: GitBranch,
     badge: 'Git-Native',
     color: 'from-cyan-500/20 to-emerald-500/20',
-    borderColor: 'hover:border-cyan-400',
+    borderColor: 'border-cyan-500/30 hover:border-cyan-400',
     span: 'col-span-1 md:col-span-2'
   }
 ];
 
 export const BentoGrid: React.FC = () => {
   return (
-    <section id="features" className="py-24 px-6 mx-auto max-w-7xl">
+    <section id="features" className="py-24 px-6 mx-auto max-w-7xl relative z-20">
       <div className="text-center mb-16">
         <h2 className="text-3xl font-extrabold text-white sm:text-5xl tracking-tight">
           Engineered for <span className="text-gradient">Production Scale</span>
         </h2>
-        <p className="mt-4 text-slate-400 text-lg max-w-2xl mx-auto">
+        <p className="mt-4 text-slate-300 text-base sm:text-lg max-w-2xl mx-auto">
           Every component is optimized for performance, deterministic reliability, and developer experience.
         </p>
       </div>
@@ -83,14 +83,14 @@ export const BentoGrid: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className={`glass-panel p-8 rounded-2xl relative group glass-panel-hover flex flex-col justify-between ${feature.span} ${feature.borderColor}`}
+              className={`bg-[#11131F]/90 backdrop-blur-xl p-8 rounded-2xl border ${feature.borderColor} relative group hover:shadow-[0_0_30px_rgba(6,182,212,0.2)] transition-all duration-300 flex flex-col justify-between ${feature.span}`}
             >
               <div>
                 <div className="flex items-center justify-between mb-6">
-                  <div className={`p-3 rounded-xl bg-gradient-to-br ${feature.color} border border-white/10 text-cyan-400`}>
+                  <div className={`p-3 rounded-xl bg-gradient-to-br ${feature.color} border border-cyan-500/30 text-cyan-400 shadow-md`}>
                     <Icon className="h-6 w-6" />
                   </div>
-                  <span className="text-xs font-semibold px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
+                  <span className="text-xs font-semibold px-3 py-1 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
                     {feature.badge}
                   </span>
                 </div>
@@ -98,14 +98,14 @@ export const BentoGrid: React.FC = () => {
                   {feature.title}
                   <ArrowUpRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity text-cyan-400" />
                 </h3>
-                <p className="text-slate-400 text-sm leading-relaxed">
+                <p className="text-slate-300 text-sm leading-relaxed">
                   {feature.description}
                 </p>
               </div>
 
-              <div className="mt-8 pt-4 border-t border-white/5 flex items-center justify-between text-xs text-slate-500 font-mono">
+              <div className="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400 font-mono">
                 <span>CodeCanvas Core v2.0</span>
-                <span className="text-cyan-400/80">Deterministic</span>
+                <span className="text-cyan-400 font-semibold">Deterministic</span>
               </div>
             </motion.div>
           );

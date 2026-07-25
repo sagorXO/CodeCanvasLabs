@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Check, Zap, Sparkles, Shield, ArrowRight } from 'lucide-react';
+import { Check, Sparkles, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface PricingMatrixProps {
@@ -60,37 +60,37 @@ export const PricingMatrix: React.FC<PricingMatrixProps> = ({ onOpenWaitlist }) 
   ];
 
   return (
-    <section id="pricing" className="py-24 px-6 mx-auto max-w-7xl">
+    <section id="pricing" className="py-24 px-6 mx-auto max-w-7xl relative z-20">
       <div className="text-center mb-12">
         <h2 className="text-3xl font-extrabold text-white sm:text-5xl tracking-tight">
           Simple, Transparent <span className="text-gradient">Pricing</span>
         </h2>
-        <p className="mt-4 text-slate-400 text-lg max-w-2xl mx-auto">
+        <p className="mt-4 text-slate-300 text-base sm:text-lg max-w-2xl mx-auto">
           Start for free in developer sandbox mode. Upgrade when your visual pipelines scale.
         </p>
 
         {/* Monthly vs Annual Toggle */}
-        <div className="mt-8 inline-flex items-center gap-3 p-1.5 rounded-full border border-white/10 bg-slateCard/90 backdrop-blur-md">
+        <div className="mt-8 inline-flex items-center gap-3 p-1.5 rounded-full border border-cyan-500/30 bg-[#11131F] backdrop-blur-xl shadow-lg">
           <button
             onClick={() => setBillingCycle('monthly')}
-            className={`px-5 py-2 rounded-full text-xs font-semibold transition-all ${
+            className={`px-5 py-2 rounded-full text-xs font-bold transition-all ${
               billingCycle === 'monthly'
                 ? 'bg-blue-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                : 'text-slate-300 hover:text-white'
             }`}
           >
             Monthly Billing
           </button>
           <button
             onClick={() => setBillingCycle('annual')}
-            className={`px-5 py-2 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
+            className={`px-5 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-2 ${
               billingCycle === 'annual'
                 ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                : 'text-slate-300 hover:text-white'
             }`}
           >
             <span>Annual Billing</span>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-400/20 text-cyan-300 border border-cyan-400/30">
+            <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-cyan-400/20 text-cyan-300 border border-cyan-400/40">
               Save 20%
             </span>
           </button>
@@ -109,21 +109,21 @@ export const PricingMatrix: React.FC<PricingMatrixProps> = ({ onOpenWaitlist }) 
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className={`glass-panel p-8 rounded-2xl relative flex flex-col justify-between glass-panel-hover ${
+              className={`p-8 rounded-2xl relative flex flex-col justify-between transition-all duration-300 ${
                 plan.popular
-                  ? 'border-cyan-400 shadow-xl shadow-cyan-500/15 bg-cyan-950/20'
-                  : 'border-white/10'
+                  ? 'bg-[#11131F] border-2 border-cyan-400 shadow-[0_0_40px_rgba(6,182,212,0.25)] scale-[1.02]'
+                  : 'bg-[#11131F]/90 border border-cyan-500/20 hover:border-cyan-500/40 hover:shadow-[0_0_25px_rgba(6,182,212,0.15)]'
               }`}
             >
               {plan.popular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-[11px] font-bold tracking-wider uppercase shadow-lg flex items-center gap-1">
-                  <Sparkles className="h-3 w-3" /> Most Popular
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-[11px] font-bold tracking-wider uppercase shadow-lg flex items-center gap-1.5">
+                  <Sparkles className="h-3.5 w-3.5 text-yellow-300" /> Most Popular
                 </div>
               )}
 
               <div>
                 <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
-                <p className="text-xs text-slate-400 min-h-[32px] mb-6">{plan.tagline}</p>
+                <p className="text-xs text-slate-300 min-h-[32px] mb-6">{plan.tagline}</p>
 
                 {/* Price Counter with Framer Motion Animation */}
                 <div className="flex items-baseline gap-1 mb-8">
@@ -139,14 +139,14 @@ export const PricingMatrix: React.FC<PricingMatrixProps> = ({ onOpenWaitlist }) 
                       {price}
                     </motion.span>
                   </AnimatePresence>
-                  <span className="text-sm font-medium text-slate-400 ml-1">/ month</span>
+                  <span className="text-sm font-semibold text-slate-400 ml-1">/ month</span>
                 </div>
 
                 {/* Features List */}
                 <ul className="space-y-3.5 mb-8">
                   {plan.features.map((feat, fIdx) => (
-                    <li key={fIdx} className="flex items-center gap-3 text-sm text-slate-300">
-                      <div className="flex-shrink-0 h-4 w-4 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center">
+                    <li key={fIdx} className="flex items-center gap-3 text-sm text-slate-200">
+                      <div className="flex-shrink-0 h-4 w-4 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center border border-cyan-500/30">
                         <Check className="h-3 w-3" />
                       </div>
                       <span>{feat}</span>
@@ -157,10 +157,10 @@ export const PricingMatrix: React.FC<PricingMatrixProps> = ({ onOpenWaitlist }) 
 
               <button
                 onClick={onOpenWaitlist}
-                className={`w-full py-3.5 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 ${
+                className={`w-full py-3.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 ${
                   plan.popular
-                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.02]'
-                    : 'bg-white/10 text-white hover:bg-white/20'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:scale-[1.02] btn-glow'
+                    : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
                 }`}
               >
                 <span>{plan.cta}</span>
