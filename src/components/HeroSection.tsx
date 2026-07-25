@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, ShieldCheck, Zap, Activity, RefreshCw, Cpu, CheckCircle2, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Helion3DBackground } from './Helion3DBackground';
 
 interface HeroSectionProps {
   onOpenWaitlist: (email?: string) => void;
@@ -30,10 +31,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist }) => {
 
   return (
     <section className="relative overflow-hidden pt-28 pb-20 md:pt-36 md:pb-28 bg-[#060507]">
+      {/* 3D Helion Background Element (Three.js 3D Torus Knot & Particle Field) */}
+      <Helion3DBackground />
+
       {/* GetLayers Helion Ambient Shader & Grid Overlay Background */}
-      <div className="absolute inset-0 grid-overlay opacity-25 pointer-events-none" />
-      <div className="absolute top-[-15%] left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-b from-cyan-500/15 via-blue-600/5 to-transparent rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute inset-0 grid-overlay opacity-25 pointer-events-none z-0" />
+      <div className="absolute top-[-15%] left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-b from-cyan-500/15 via-blue-600/5 to-transparent rounded-full blur-[140px] pointer-events-none z-0" />
       <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-[#060507] to-transparent pointer-events-none z-10" />
+
 
       <div className="relative z-20 mx-auto max-w-6xl px-6 text-center">
         {/* Helion Glass Pill Badge */}
