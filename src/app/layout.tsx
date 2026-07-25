@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   title: 'CodeCanvas Labs — Visual AI & Workflow Pipeline Engine',
   description: 'Architect, simulate, and deploy high-speed visual AI pipelines with zero layout shift and sub-11ms execution latency.',
   keywords: ['AI Pipeline', 'Visual Workflows', 'Next.js 14', 'Gemini AI Engine', 'Developer Tools', 'SaaS Landing Page'],
+  icons: {
+    icon: '/favicon.svg',
+  },
   openGraph: {
     title: 'CodeCanvas Labs — Visual AI & Workflow Pipeline Engine',
     description: 'Architect, simulate, and deploy high-speed visual AI pipelines with zero layout shift and sub-11ms execution latency.',
@@ -36,4 +39,3 @@ export default function RootLayout({
     </html>
   );
 }
-

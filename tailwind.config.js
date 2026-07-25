@@ -18,13 +18,18 @@ module.exports = {
         'card-gradient': 'linear-gradient(135deg, rgba(17, 19, 31, 0.8) 0%, rgba(15, 17, 26, 0.5) 100%)',
       },
       animation: {
-        'marquee': 'marquee 25s linear infinite',
+        'marquee': 'marquee 30s linear infinite',
+        'marquee-reverse': 'marqueeReverse 30s linear infinite',
         'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
       },
       keyframes: {
         marquee: {
           '0%': { transform: 'translateX(0%)' },
           '100%': { transform: 'translateX(-50%)' },
+        },
+        marqueeReverse: {
+          '0%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(0%)' },
         },
         pulseGlow: {
           '0%, 100%': { opacity: '0.4' },
