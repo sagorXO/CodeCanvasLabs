@@ -21,6 +21,25 @@
   }
 }
 
+/* 3-Tier Obsidian Elevation System */
+.bg-obsidian-base {
+  background-color: #060507;
+}
+
+.bg-obsidian-surface {
+  background-color: #0B0E1B;
+}
+
+.bg-obsidian-highlight {
+  background-color: #12162A;
+}
+
+/* Touch Target Minimum Sizing (44px) */
+.touch-target-min {
+  min-height: 44px;
+  min-width: 44px;
+}
+
 /* Glassmorphism & High-Contrast Visual Panel Utilities */
 .glass-panel {
   background: rgba(17, 19, 31, 0.85);

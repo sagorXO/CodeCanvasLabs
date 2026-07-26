@@ -9,13 +9,23 @@ const CASE_STUDIES = [
     id: 'case_1',
     title: 'Visual AI Workflow & Wasm Pipeline Engine',
     client: 'Fintech AI Enterprise',
-    budget: '$18,500 Engagment',
+    budget: '$18,500 Engagement',
     summary: 'Engineered a real-time node graph execution pipeline capable of processing multimodal AI payloads directly at edge locations with sub-11ms latency.',
     metrics: [
       { label: 'Avg Latency', val: '8.4 ms' },
       { label: 'Throughput', val: '120k req/s' },
       { label: 'Uptime SLA', val: '99.999%' },
     ],
+    businessImpact: {
+      roi: '3.4x Annual Operational Cost Savings',
+      timeSaved: '78% reduction in manual transaction auditing',
+      deliverable: 'Fully managed Wasm edge pipeline with automated failover & 24/7 monitoring dashboard.',
+      highlights: [
+        'Eliminated third-party SaaS dependency cost by $45,000/yr',
+        'Accelerated customer onboarding flow from 12 mins to 14 seconds',
+        'Guaranteed Zero Data Loss SLA with distributed multi-region sync'
+      ]
+    },
     architecture: [
       'Next.js 14 App Router + React 18 Concurrent Rendering',
       'Three.js GLSL Custom Noise WebGL Shader Pipeline',
@@ -42,6 +52,16 @@ export async function processPipelinePayload(stream: ArrayBuffer) {
       { label: 'Failover Speed', val: '< 2 ms' },
       { label: 'Compliance', val: 'SOC2 Type II' },
     ],
+    businessImpact: {
+      roi: 'Passed SOC2 Type II Audit in 3 Weeks',
+      timeSaved: '99.99% automated threat containment',
+      deliverable: 'Complete Zero-Trust mesh setup with automated penetration test suite.',
+      highlights: [
+        'Shielded trading systems against multi-gigabit DDoS attack vectors',
+        'Reduced security compliance audit preparation overhead by 120 hours',
+        'Zero downtime recorded across 18 consecutive months'
+      ]
+    },
     architecture: [
       'Distributed Rust / Wasm Microservices',
       'Persistent WebSockets Mesh with Zero Cold-Starts',
@@ -69,6 +89,16 @@ export const securityPolicy = {
       { label: 'Cost Savings', val: '64%' },
       { label: 'Execution', val: 'Deterministic' },
     ],
+    businessImpact: {
+      roi: '5.2x Engineering Velocity Increase',
+      timeSaved: 'Automated 80% of routine code migration tasks',
+      deliverable: 'Custom agentic SDK with pre-built TDD validation harness.',
+      highlights: [
+        'Enabled non-technical product managers to generate verified API schemas',
+        'Reduced cloud API token expenditures by 64% through prompt caching',
+        'Shipped full MVP production release 3 weeks ahead of scheduled deadline'
+      ]
+    },
     architecture: [
       'Gemini 3.6 Flash Multi-Modal Tool Calling API',
       'Framer Motion Micro-Interaction UI State Machine',
@@ -86,12 +116,13 @@ if (decision.tool) {
 
 export const CaseStudiesShowcase: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('case_1');
+  const [viewMode, setViewMode] = useState<'business' | 'technical'>('business');
 
   const currentCase = CASE_STUDIES.find(c => c.id === activeTab) || CASE_STUDIES[0];
 
   return (
     <section id="cases" className="py-24 px-6 mx-auto max-w-6xl relative z-20">
-      <div className="text-center mb-14">
+      <div className="text-center mb-10">
         <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1 text-xs font-mono text-blue-300 mb-4">
           <Layers className="h-3.5 w-3.5" />
           <span>Selected Client Case Studies & Architecture Blueprints</span>
@@ -102,6 +133,32 @@ export const CaseStudiesShowcase: React.FC = () => {
         <p className="mt-4 text-slate-300/80 text-base sm:text-lg max-w-2xl mx-auto">
           Explore real-world software architecture engagements delivered for enterprise clients.
         </p>
+      </div>
+
+      {/* Dual View Mode Switcher: Business ROI vs Technical Specs */}
+      <div className="flex justify-center mb-8">
+        <div className="inline-flex items-center p-1.5 rounded-2xl bg-black/60 border border-white/10 backdrop-blur-xl">
+          <button
+            onClick={() => setViewMode('business')}
+            className={`flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-mono font-bold transition-all duration-300 ${
+              viewMode === 'business'
+                ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg shadow-cyan-500/25'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            <span>💼 Executive Business Impact</span>
+          </button>
+          <button
+            onClick={() => setViewMode('technical')}
+            className={`flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-mono font-bold transition-all duration-300 ${
+              viewMode === 'technical'
+                ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg shadow-cyan-500/25'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            <span>⚡ Technical Architecture</span>
+          </button>
+        </div>
       </div>
 
       {/* Case Study Tab Switcher */}
@@ -124,7 +181,7 @@ export const CaseStudiesShowcase: React.FC = () => {
       {/* Main Case Study Display Frame */}
       <AnimatePresence mode="wait">
         <motion.div
-          key={currentCase.id}
+          key={`${currentCase.id}-${viewMode}`}
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -15 }}
@@ -158,34 +215,76 @@ export const CaseStudiesShowcase: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Architecture Invariants */}
-            <div className="lg:col-span-6">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold mb-4 flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-cyan-400" />
-                System Invariants & Stack Specification
-              </h4>
-              <ul className="space-y-3">
-                {currentCase.architecture.map((item, idx) => (
-                  <li key={idx} className="flex items-center gap-3 text-sm text-slate-300 bg-white/[0.03] p-3 rounded-xl border border-white/[0.06]">
-                    <span className="h-2 w-2 rounded-full bg-cyan-400 shrink-0" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {viewMode === 'business' ? (
+            /* Business ROI & Deliverable View */
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              <div className="lg:col-span-6 bg-gradient-to-br from-cyan-950/20 to-transparent p-6 rounded-2xl border border-cyan-500/20">
+                <h4 className="text-xs font-mono uppercase tracking-wider text-emerald-400 font-bold mb-4 flex items-center gap-2">
+                  <Zap className="h-4 w-4 text-emerald-400" />
+                  Business Value & ROI Highlights
+                </h4>
+                <div className="space-y-4">
+                  <div>
+                    <div className="text-xs font-mono text-slate-400">Measured Financial Impact</div>
+                    <div className="text-xl font-bold text-emerald-300 mt-0.5">{currentCase.businessImpact.roi}</div>
+                  </div>
+                  <div>
+                    <div className="text-xs font-mono text-slate-400">Operational Time Saved</div>
+                    <div className="text-base font-semibold text-white mt-0.5">{currentCase.businessImpact.timeSaved}</div>
+                  </div>
+                  <div>
+                    <div className="text-xs font-mono text-slate-400">Client Deliverable</div>
+                    <div className="text-sm text-slate-300 mt-0.5">{currentCase.businessImpact.deliverable}</div>
+                  </div>
+                </div>
+              </div>
 
-            {/* Architecture Code Snippet */}
-            <div className="lg:col-span-6">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold mb-4 flex items-center gap-2">
-                <Terminal className="h-4 w-4 text-cyan-400" />
-                Authoritative Implementation Snippet
-              </h4>
-              <pre className="p-5 rounded-2xl bg-[#060710] border border-white/10 font-mono text-xs text-cyan-300/90 leading-relaxed overflow-x-auto">
-                <code>{currentCase.codeSnippet}</code>
-              </pre>
+              <div className="lg:col-span-6">
+                <h4 className="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold mb-4 flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-cyan-400" />
+                  Key Business Outcomes Achieved
+                </h4>
+                <ul className="space-y-3">
+                  {currentCase.businessImpact.highlights.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-sm text-slate-300 bg-white/[0.03] p-4 rounded-xl border border-white/[0.06]">
+                      <span className="h-2 w-2 rounded-full bg-emerald-400 shrink-0 mt-1.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
+          ) : (
+            /* Technical Architecture & Code View */
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              {/* Architecture Invariants */}
+              <div className="lg:col-span-6">
+                <h4 className="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold mb-4 flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-cyan-400" />
+                  System Invariants & Stack Specification
+                </h4>
+                <ul className="space-y-3">
+                  {currentCase.architecture.map((item, idx) => (
+                    <li key={idx} className="flex items-center gap-3 text-sm text-slate-300 bg-white/[0.03] p-3 rounded-xl border border-white/[0.06]">
+                      <span className="h-2 w-2 rounded-full bg-cyan-400 shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Architecture Code Snippet */}
+              <div className="lg:col-span-6">
+                <h4 className="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold mb-4 flex items-center gap-2">
+                  <Terminal className="h-4 w-4 text-cyan-400" />
+                  Authoritative Implementation Snippet
+                </h4>
+                <pre className="p-5 rounded-2xl bg-[#060710] border border-white/10 font-mono text-xs text-cyan-300/90 leading-relaxed overflow-x-auto">
+                  <code>{currentCase.codeSnippet}</code>
+                </pre>
+              </div>
+            </div>
+          )}
         </motion.div>
       </AnimatePresence>
     </section>

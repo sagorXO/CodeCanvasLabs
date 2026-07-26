@@ -43,5 +43,14 @@
     "waitlist_position": 3846,
     "referral_code": "CANVAS-3846",
     "created_at": "2026-07-26T20:10:46.305Z"
+  },
+  {
+    "id": "usr_de470ad7",
+    "email": "test_a250448bdf8a7@codecanvas.io",
+    "role": "Full Stack Engineer",
+    "use_case": "Visual Pipelines",
+    "waitlist_position": 3847,
+    "referral_code": "CANVAS-3847",
+    "created_at": "2026-07-26T20:23:38.050Z"
   }
 ]

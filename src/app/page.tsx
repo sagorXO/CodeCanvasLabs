@@ -60,7 +60,7 @@ export default function Home() {
 
         <main>
           {/* Hero Section with Interactive 3D WebGL Element */}
-          <div className="bg-[#060507]/60">
+          <div className="bg-obsidian-base/60">
             <HeroSection
               onOpenConsultation={() => handleOpenConsultation()}
               onOpenWaitlist={handleOpenWaitlist}
@@ -68,54 +68,54 @@ export default function Home() {
           </div>
 
           {/* Partner & Tech Proof Marquee */}
-          <div className="bg-[#0B0E17]/80 backdrop-blur-sm border-y border-white/[0.04]">
+          <div className="bg-obsidian-surface/90 backdrop-blur-sm border-y border-white/[0.04]">
             <SocialProofMarquee />
           </div>
 
           {/* Proven Enterprise Case Studies & Architecture Blueprints */}
-          <div className="bg-gradient-to-b from-[#080C1B]/90 via-[#0A0E22]/90 to-[#080C1B]/90 border-b border-white/[0.04]">
+          <div className="bg-obsidian-surface/95 border-b border-white/[0.04]">
             <CaseStudiesShowcase />
           </div>
 
           {/* Interactive Project Scope & Budget Calculator ($10,000+) */}
-          <div className="bg-[#090C1A]/90 border-b border-white/[0.04] relative">
+          <div className="bg-obsidian-surface/90 border-b border-white/[0.04] relative">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-cyan-950/20 via-transparent to-transparent pointer-events-none" />
             <ProjectCalculator onOpenConsultation={handleOpenConsultation} />
           </div>
 
           {/* Live Interactive Pipeline Graph Simulator */}
-          <div className="bg-[#060507]/80 border-b border-white/[0.04]">
+          <div className="bg-obsidian-base/80 border-b border-white/[0.04]">
             <InteractiveCanvas />
           </div>
 
           {/* Real-time Edge Health Diagnostics Benchmark */}
-          <div className="bg-[#070914]/85 border-b border-white/[0.04]">
+          <div className="bg-obsidian-surface/90 border-b border-white/[0.04]">
             <EdgeBenchmarkWidget />
           </div>
 
           {/* System Capability & Tech Stack Matrix */}
-          <div className="bg-[#090A16]/85 border-b border-white/[0.04]">
+          <div className="bg-obsidian-surface/90 border-b border-white/[0.04]">
             <TechStackMatrix />
           </div>
 
           {/* Bento Grid Architectural Invariants */}
-          <div className="bg-[#060507]/80">
+          <div className="bg-obsidian-base/80">
             <BentoGrid />
           </div>
 
           {/* Developer SDK & Integration Showcase */}
-          <div className="bg-[#090918]/85 border-y border-white/[0.04] relative">
+          <div className="bg-obsidian-surface/90 border-y border-white/[0.04] relative">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-cyan-900/15 via-transparent to-transparent pointer-events-none" />
             <SDKShowcase />
           </div>
 
           {/* FAQ Accordion Section */}
-          <div className="bg-[#070912]/85 border-y border-white/[0.04]">
+          <div className="bg-obsidian-surface/90 border-y border-white/[0.04]">
             <FAQSection />
           </div>
 
           {/* Final Call to Action Banner */}
-          <div className="bg-[#060507]/90">
+          <div className="bg-obsidian-base/90">
             <CTABanner onOpenWaitlist={() => handleOpenConsultation()} />
           </div>
         </main>

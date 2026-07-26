@@ -85,7 +85,7 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onOpenCons
                 <button
                   key={item.id}
                   onClick={() => setProjectType(item.id as any)}
-                  className={`p-4 rounded-xl border text-left transition-all ${
+                  className={`p-4 rounded-xl border text-left transition-all touch-target-min min-h-[44px] ${
                     projectType === item.id
                       ? 'bg-cyan-500/15 border-cyan-400 text-white shadow-[0_0_15px_rgba(6,182,212,0.2)]'
                       : 'bg-black/40 border-white/10 text-slate-400 hover:text-white'
@@ -110,7 +110,7 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onOpenCons
                   <button
                     key={key}
                     onClick={() => toggleAddon(key)}
-                    className={`w-full p-3.5 rounded-xl border flex items-center justify-between transition-all ${
+                    className={`w-full p-3.5 rounded-xl border flex items-center justify-between transition-all touch-target-min min-h-[44px] ${
                       isSelected
                         ? 'bg-cyan-500/15 border-cyan-400 text-white'
                         : 'bg-black/40 border-white/10 text-slate-300 hover:text-white'
@@ -139,7 +139,7 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onOpenCons
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => setTimelineSpeed('standard')}
-                className={`p-3.5 rounded-xl border text-center text-xs font-mono font-bold transition-all ${
+                className={`p-3.5 rounded-xl border text-center text-xs font-mono font-bold transition-all touch-target-min min-h-[44px] ${
                   timelineSpeed === 'standard'
                     ? 'bg-cyan-500/15 border-cyan-400 text-white'
                     : 'bg-black/40 border-white/10 text-slate-400 hover:text-white'
@@ -149,7 +149,7 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onOpenCons
               </button>
               <button
                 onClick={() => setTimelineSpeed('expedited')}
-                className={`p-3.5 rounded-xl border text-center text-xs font-mono font-bold transition-all ${
+                className={`p-3.5 rounded-xl border text-center text-xs font-mono font-bold transition-all touch-target-min min-h-[44px] ${
                   timelineSpeed === 'expedited'
                     ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg'
                     : 'bg-black/40 border-white/10 text-slate-400 hover:text-white'
