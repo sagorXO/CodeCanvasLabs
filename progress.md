@@ -48,7 +48,10 @@
 - **Client Case Studies & Architecture Blueprints**: Built [CaseStudiesShowcase.tsx](file:///Users/saiedsagar/DEVELOPER/DEVELOPER/CodeCanvasLabs/src/components/CaseStudiesShowcase.tsx) highlighting 3 enterprise engineering engagements with live metrics, architecture blueprints, and code snippets.
 - **Tech Stack & System Capability Matrix**: Built [TechStackMatrix.tsx](file:///Users/saiedsagar/DEVELOPER/DEVELOPER/CodeCanvasLabs/src/components/TechStackMatrix.tsx) showcasing Next.js 14, Three.js, Wasm, Python, Gemini 3.6 Flash, Docker, and PostgreSQL mastery.
 - **Discovery Booking & Proposal Intake**: Built [ConsultationModal.tsx](file:///Users/saiedsagar/DEVELOPER/DEVELOPER/CodeCanvasLabs/src/components/ConsultationModal.tsx) for high-ticket project discovery intakes.
-- **Developer Branding**: Re-aligned identity across [layout.tsx](file:///Users/saiedsagar/DEVELOPER/DEVELOPER/CodeCanvasLabs/src/app/layout.tsx), [Navbar.tsx](file:///Users/saiedsagar/DEVELOPER/DEVELOPER/CodeCanvasLabs/src/components/Navbar.tsx), and [Footer.tsx](file:///Users/saiedsagar/DEVELOPER/DEVELOPER/CodeCanvasLabs/src/components/Footer.tsx) to **Saied Sagar — AI Systems Architect & Full-Stack Studio**.
+
+### [2026-07-26 23:11] 3D Hero Mouse-Following & Parallax Depth Upgrade
+- **3D Background Layer Behind Hero Text**: Built [Hero3DBackgroundCanvas.tsx](file:///Users/saiedsagar/DEVELOPER/DEVELOPER/CodeCanvasLabs/src/components/Hero3DBackgroundCanvas.tsx) featuring 12 floating Three.js 3D geometric nodes (icosahedrons, octahedrons, toruses, boxes) and a 220-particle cloud that interactively tilt and follow mouse movements with LERP spring physics.
+- **Canvas Sizing & Parallax Micro-Badges**: Fixed container sizing in [Hero3DCanvas.tsx](file:///Users/saiedsagar/DEVELOPER/DEVELOPER/CodeCanvasLabs/src/components/Hero3DCanvas.tsx) using `ResizeObserver` and explicit canvas bounds. Added Framer Motion mouse-tracking parallax badges (`Gemini 3.6 Flash Multi-Modal Engine`, `Sub-11ms Wasm Edge Mesh`) floating across depth layers.
 - **Verification**:
   - `npm run test`: **11/11 Vitest unit tests passed**.
   - `npm run lint`: **✔ No ESLint warnings or errors**.

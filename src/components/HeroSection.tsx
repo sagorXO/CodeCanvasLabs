@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, ShieldCheck, Activity, Zap, Calculator, Calendar } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { ArrowRight, ShieldCheck, Activity, Zap, Calculator, Calendar, Cpu, Layers } from 'lucide-react';
 import { Hero3DCanvas } from './Hero3DCanvas';
+import { Hero3DBackgroundCanvas } from './Hero3DBackgroundCanvas';
 
 interface HeroSectionProps {
   onOpenConsultation: () => void;
@@ -36,18 +37,53 @@ const fadeUpVariants = {
 };
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenConsultation, onOpenWaitlist }) => {
-  return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
-      {/* Ambient Spotlight Background Overlays */}
-      <div className="absolute inset-0 grid-overlay opacity-25 pointer-events-none z-0" />
-      <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-b from-cyan-500/20 via-blue-600/10 to-transparent rounded-full blur-[140px] pointer-events-none z-0" />
+  // Parallax Mouse Physics
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
-      {/* Main Content Grid */}
+  const springX = useSpring(mouseX, { stiffness: 60, damping: 15 });
+  const springY = useSpring(mouseY, { stiffness: 60, damping: 15 });
+
+  const badgeX1 = useTransform(springX, [-0.5, 0.5], [-25, 25]);
+  const badgeY1 = useTransform(springY, [-0.5, 0.5], [-25, 25]);
+
+  const badgeX2 = useTransform(springX, [-0.5, 0.5], [30, -30]);
+  const badgeY2 = useTransform(springY, [-0.5, 0.5], [30, -30]);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+    mouseX.set(clientX / innerWidth - 0.5);
+    mouseY.set(clientY / innerHeight - 0.5);
+  };
+
+  return (
+    <section
+      onMouseMove={handleMouseMove}
+      className="relative pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden select-none"
+    >
+      {/* 3D Mouse-Following Geometric Background Element Behind Text */}
+      <Hero3DBackgroundCanvas />
+
+      {/* Ambient Spotlight Background Overlays */}
+      <div className="absolute inset-0 grid-overlay opacity-20 pointer-events-none z-0" />
+      <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[900px] h-[550px] bg-gradient-to-b from-cyan-500/20 via-blue-600/10 to-transparent rounded-full blur-[140px] pointer-events-none z-0" />
+
+      {/* Main Hero Grid */}
       <div className="relative z-20 mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center text-center lg:text-left">
           
           {/* Left Text Column (7 Cols) */}
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-7 relative">
+            {/* Parallax Floating 3D Micro-Badge 1 */}
+            <motion.div
+              style={{ x: badgeX1, y: badgeY1 }}
+              className="hidden lg:flex absolute -top-8 -left-6 items-center gap-2 px-3 py-1.5 rounded-full bg-[#0E1325]/90 border border-cyan-400/30 backdrop-blur-xl text-[11px] font-mono text-cyan-300 shadow-xl pointer-events-none z-30"
+            >
+              <Cpu className="h-3.5 w-3.5 text-cyan-400 animate-pulse" />
+              <span>Gemini 3.6 Flash Multi-Modal Engine</span>
+            </motion.div>
+
             {/* Status Pill */}
             <motion.div
               initial="hidden"
@@ -155,25 +191,36 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenConsultation, on
               <span className="text-slate-700 hidden sm:inline">•</span>
               <div className="flex items-center gap-2">
                 <Zap className="h-4 w-4 text-cyan-400" />
-                <span>Sub-11ms Edge Latency</span>
+                <span>Sub-11ms Edge Execution</span>
               </div>
             </motion.div>
           </div>
 
-          {/* Right Column: Prominent Interactive 3D WebGL Element (5 Cols) */}
+          {/* Right Column: Prominent Interactive 3D WebGL Core Box (5 Cols) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 flex flex-col items-center justify-center relative"
+            className="lg:col-span-5 flex flex-col items-center justify-center relative z-20"
           >
-            <div className="relative p-2 rounded-3xl bg-gradient-to-b from-cyan-500/20 via-blue-500/10 to-transparent border border-cyan-500/30 backdrop-blur-2xl shadow-2xl shadow-cyan-500/15">
+            {/* Parallax Floating 3D Micro-Badge 2 */}
+            <motion.div
+              style={{ x: badgeX2, y: badgeY2 }}
+              className="hidden lg:flex absolute -top-6 -right-4 items-center gap-2 px-3 py-1.5 rounded-full bg-[#0E1325]/90 border border-emerald-400/30 backdrop-blur-xl text-[11px] font-mono text-emerald-300 shadow-xl pointer-events-none z-30"
+            >
+              <Layers className="h-3.5 w-3.5 text-emerald-400" />
+              <span>Sub-11ms Wasm Edge Mesh</span>
+            </motion.div>
+
+            <div className="w-full relative p-4 rounded-3xl bg-gradient-to-b from-[#101529]/95 via-[#0A0D1D]/95 to-[#060507] border border-cyan-500/30 backdrop-blur-2xl shadow-2xl shadow-cyan-500/20 hover:border-cyan-400/50 transition-colors duration-500">
               <Hero3DCanvas />
 
               {/* Overlay Badge */}
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-[#080A12] border border-cyan-400/40 text-xs font-mono text-cyan-300 font-bold shadow-xl flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
-                <span>Interactive 3D WebGL Engine Core</span>
+              <div className="mt-2 text-center">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#060710] border border-cyan-400/30 text-xs font-mono text-cyan-300 font-bold shadow-lg">
+                  <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
+                  <span>Interactive 3D Engine Core</span>
+                </div>
               </div>
             </div>
           </motion.div>
