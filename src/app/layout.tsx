@@ -10,17 +10,17 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'CodeCanvas Labs — Visual AI & Workflow Pipeline Engine',
-  description: 'Architect, simulate, and deploy high-speed visual AI pipelines with zero layout shift and sub-11ms execution latency.',
-  keywords: ['AI Pipeline', 'Visual Workflows', 'Next.js 14', 'Gemini AI Engine', 'Developer Tools', 'SaaS Landing Page'],
+  title: 'Saied Sagar — AI Systems Architect & Full-Stack Engineering Studio',
+  description: 'Architecting enterprise AI workflows, high-performance web applications, and sub-11ms edge infrastructures for industry leaders.',
+  keywords: ['Saied Sagar', 'AI Engineer', 'Full-Stack Developer', 'Next.js 14', 'Gemini AI Engine', 'Three.js 3D', 'WebAssembly', 'Portfolio Studio'],
   icons: {
     icon: '/favicon.svg',
   },
   openGraph: {
-    title: 'CodeCanvas Labs — Visual AI & Workflow Pipeline Engine',
-    description: 'Architect, simulate, and deploy high-speed visual AI pipelines with zero layout shift and sub-11ms execution latency.',
-    url: 'https://codecanvas.io',
-    siteName: 'CodeCanvas Labs',
+    title: 'Saied Sagar — Senior AI Systems Architect & Engineering Studio',
+    description: 'Bespoke AI system architecture, high-speed web apps, and enterprise software engineering.',
+    url: 'https://saiedsagar.dev',
+    siteName: 'Saied Sagar Studio',
     type: 'website',
   },
 };
@@ -29,28 +29,23 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': 'Organization',
-      '@id': 'https://codecanvas.io/#organization',
-      'name': 'CodeCanvas Labs',
-      'url': 'https://codecanvas.io',
-      'logo': 'https://codecanvas.io/favicon.svg',
+      '@type': 'Person',
+      '@id': 'https://saiedsagar.dev/#person',
+      'name': 'Saied Sagar',
+      'jobTitle': 'Senior AI Systems Architect & Lead Software Engineer',
+      'url': 'https://saiedsagar.dev',
       'sameAs': [
-        'https://github.com/codecanvas-labs',
-        'https://twitter.com/codecanvas_labs'
+        'https://github.com/sagorXO',
+        'https://linkedin.com/in/saiedsagar',
+        'https://twitter.com/saiedsagar'
       ]
     },
     {
-      '@type': 'SoftwareApplication',
-      '@id': 'https://codecanvas.io/#software',
-      'name': 'CodeCanvas Visual Engine',
-      'applicationCategory': 'DeveloperApplication',
-      'operatingSystem': 'Cloud / Edge WebAssembly',
-      'offers': {
-        '@type': 'Offer',
-        'price': '0.00',
-        'priceCurrency': 'USD'
-      },
-      'description': 'Architect, simulate, and deploy high-speed visual AI pipelines with zero layout shift and sub-11ms execution latency.'
+      '@type': 'ProfessionalService',
+      '@id': 'https://saiedsagar.dev/#service',
+      'name': 'Saied Sagar Studio — Systems Engineering',
+      'priceRange': '$$$$ ($5,000 - $25,000+)',
+      'description': 'Bespoke enterprise AI workflows, Next.js web applications, and sub-11ms Wasm edge engineering.'
     }
   ]
 };
